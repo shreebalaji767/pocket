@@ -285,9 +285,7 @@ navMenuToggle.addEventListener('click',()=>{const opening=navMenuPanel.hidden;na
 document.addEventListener('click',event=>{if(!navMenu.contains(event.target))closeNavMenu()});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!navMenuPanel.hidden){closeNavMenu();navMenuToggle.focus()}});
 navMenuPanel.addEventListener('click',event=>{if(event.target.closest('button')&&event.target.closest('button').id!=='importAccounts')closeNavMenu()});
-const updateNavMenuAccount=()=>{const name=$('currentAccount').textContent.trim();$('navMenuAccount').textContent=name?'🔒 '+name:'🔒 Private library'};
-new MutationObserver(updateNavMenuAccount).observe($('currentAccount'),{childList:true,subtree:true,characterData:true,attributes:true});
-updateNavMenuAccount();
+
 $('import').onclick=()=>$('file').click();$('file').onchange=async()=>{let f=$('file').files[0];if(!f)return;try{let d=JSON.parse(await f.text()),incoming=Array.isArray(d)?d:d.items;if(!Array.isArray(incoming))throw Error();let clean=incoming.filter(x=>x&&validUrl(x.url)).map(x=>{const {media,...item}=x;return {...item,id:String(item.id||Date.now()+Math.random()),url:validUrl(item.url),title:String(item.title||domain(item.url)),tags:Array.isArray(item.tags)?item.tags.filter(t=>typeof t==='string').slice(0,20):[],notes:String(item.notes||''),group:String(item.group||''),created:item.created||new Date().toISOString(),read:!!item.read,favorite:!!item.favorite,archived:!!item.archived}});if(!confirm('Import '+clean.length+' links? Existing items will be kept.'))return;let ids=new Set(items.map(x=>x.id));clean.forEach(x=>{if(ids.has(x.id))x.id+='-'+Math.random().toString(36).slice(2,6)});items=[...clean,...items];save();render();notify('Link import complete')}catch{notify('Could not import this JSON backup.')}finally{$('file').value=''}};
 
 // Defensive navigation handlers: keep page transitions visible even if storage initialization fails.
