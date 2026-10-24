@@ -267,6 +267,73 @@ button,.btn,.chip{-webkit-tap-highlight-color:transparent;touch-action:manipulat
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
 }
+
+/* Mobile/tablet layout cleanup v1 */
+@media(max-width:760px){
+  .top{height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px max(14px,env(safe-area-inset-left)) 12px max(14px,env(safe-area-inset-right))}
+  .top>.brand{min-width:0;font-size:20px;gap:8px}
+  .top>.brand .mark{width:32px;height:32px}
+  .actions{display:flex;width:auto;min-width:0;gap:7px;justify-content:flex-end}
+  .actions>#add{min-height:44px;padding:10px 12px;white-space:nowrap}
+  .navmenu-trigger{min-height:44px;padding:10px 12px}
+  .navmenu-panel{position:fixed;top:calc(env(safe-area-inset-top) + 68px);right:max(10px,env(safe-area-inset-right));width:min(320px,calc(100vw - 20px));max-height:calc(100dvh - 150px);overflow-y:auto;overscroll-behavior:contain}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;padding:18px max(14px,env(safe-area-inset-left)) calc(108px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-right))}
+  .wrap>aside{min-width:0;width:100%;margin:0}
+  .wrap>aside>.nav{margin-bottom:12px}
+  .main,.heading,.searchrow,.cards,.item{min-width:0;max-width:100%}
+  .heading{gap:12px;margin-bottom:18px}
+  .heading h1{font-size:clamp(24px,5.5vw,32px);overflow-wrap:anywhere}
+  .heading p{font-size:13px}
+  .searchrow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
+  .searchrow .search{flex:1 1 100%;width:100%;min-width:0}
+  .searchrow>#import{margin-left:auto}
+  .cards{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+  .item{padding:15px;border-radius:15px}
+  .itemtop{min-width:0;flex-wrap:wrap}
+  .item h2{min-width:0;overflow-wrap:anywhere}
+  .item-footer-actions{display:flex;flex-wrap:wrap;gap:7px}
+  .item-footer-actions .btn{flex:1 1 auto;min-width:0;min-height:40px}
+  .quickfilters,.filters{display:flex;flex-wrap:wrap;gap:7px;max-width:100%}
+  .quickfilters .chip,.filters .chip{min-height:36px}
+  .modal{width:calc(100vw - 24px);max-width:520px;max-height:calc(100dvh - 24px);overflow:auto;margin:auto;padding:clamp(16px,4vw,24px)}
+  .modalfoot{display:flex;flex-wrap:wrap;gap:8px}
+  .modalfoot .btn{min-height:42px}
+  input,textarea,select{max-width:100%;min-width:0}
+  body:not(.signed-out){padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+}
+@media(max-width:420px){
+  .top{grid-template-columns:minmax(0,1fr) auto;gap:7px;padding-top:10px;padding-bottom:10px}
+  .top>.brand{font-size:18px}
+  .actions{gap:5px}
+  .actions>#add,.navmenu-trigger{padding:9px 10px;font-size:12px}
+  .navmenu-trigger{gap:5px}
+  .navmenu-panel{right:8px;width:calc(100vw - 16px);max-height:calc(100dvh - 130px)}
+  .wrap{padding-inline:11px;gap:14px}
+  .heading{align-items:flex-start}
+  .heading>div{min-width:0}
+  .heading>.primary{width:100%;min-height:44px}
+  .searchrow>#import{min-height:40px}
+  .item{padding:13px}
+  .itemtop{gap:8px}
+  .item-footer-actions .btn{font-size:12px;padding:8px}
+  #nav.primary-nav{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+@media(max-width:340px){
+  .top{grid-template-columns:minmax(0,1fr);justify-items:stretch}
+  .top>.brand{font-size:18px}
+  .actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto}
+  .actions>#add{width:100%}
+  .wrap{padding-inline:9px}
+}
+@media(min-width:561px) and (max-width:760px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .item{padding:14px}
+}
+@media(orientation:landscape) and (max-height:500px) and (max-width:900px){
+  .navmenu-panel{max-height:calc(100dvh - 85px)}
+  .wrap{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+  .modal{max-height:calc(100dvh - 12px)}
+}
 </style></head>
 <body class="signed-out">
 <header class="top"><a class="brand" id="brandHome" href="./" aria-label="Pocket home — refresh page" title="Click to refresh this page" style="color:inherit;text-decoration:none"><span class="mark"><img src="./logo.svg" alt="" width="38" height="38"></span><span>Pocket</span></a><div class="actions"><button class="btn primary" id="add">＋ Save link</button><div class="navmenu" id="navMenu"><button class="btn navmenu-trigger" id="navMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="navMenuPanel"><span aria-hidden="true">☰</span> <span class="menu-trigger-label">Menu</span><span class="menu-chevron" aria-hidden="true">⌄</span></button><div class="navmenu-panel" id="navMenuPanel" role="menu" aria-label="Pocket actions" hidden><button class="navmenu-item navmenu-install" id="installPwa" type="button" role="menuitem">⬇ <span class="installlabel">Install app</span></button><span id="currentAccount" class="navmenu-accountname" hidden></span><span id="navMenuAccount" hidden aria-hidden="true"></span><div class="navmenu-divider"></div><div class="navmenu-section">ACCOUNT</div><button class="navmenu-item" id="switchAccount" type="button" role="menuitem" hidden><span class="navmenu-icon">⇄</span><span>Switch / log out</span></button><div class="navmenu-section">BACKUP &amp; EXPORT</div><button class="navmenu-item" id="exportAccounts" type="button" role="menuitem"><span class="navmenu-icon">↧</span><span>Export accounts</span></button><button class="navmenu-item" id="importAccounts" type="button" role="menuitem"><span class="navmenu-icon">↥</span><span>Import accounts</span></button><input id="accountsFile" type="file" accept=".json,application/json" hidden><button class="navmenu-item" id="exportCsv" type="button" role="menuitem" title="Export links as a spreadsheet-friendly CSV"><span class="navmenu-icon">▦</span><span>Export CSV</span><span class="navmenu-badge">CSV</span></button><button class="navmenu-item" id="export" type="button" role="menuitem"><span class="navmenu-icon">⇩</span><span>Export links</span><span class="navmenu-badge">JSON</span></button><div class="navmenu-section">PREFERENCES</div><button class="navmenu-item" id="theme" type="button" role="menuitem" aria-label="Toggle dark mode"><span class="navmenu-icon">☾</span><span id="themeMenuLabel">Dark mode</span><span class="navmenu-shortcut" id="themeMenuState">Off</span></button></div></div></div></header>
