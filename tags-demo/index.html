@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f8fa">
+<title>Tags · Pocket Demo</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#252833;background:#f7f8fa;font-synthesis:none;text-rendering:optimizeLegibility}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px}.tag-demo{width:min(100%,760px);padding:28px;background:#fff;border:1px solid #e8eaf0;border-radius:18px;box-shadow:0 12px 40px #202a3d0a}.heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}.heading h1{margin:0;font-size:20px;letter-spacing:-.4px}.count{color:#777c89;font-size:13px;white-space:nowrap}.tags{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.tag{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:7px 12px;border:1px solid #e1e4eb;border-radius:999px;background:#fff;color:#505563;font-size:14px;line-height:1.2;cursor:pointer;user-select:none;transition:background .16s,border-color .16s,color .16s,box-shadow .16s}.tag:hover{background:#f4f6fa;border-color:#cbd1dc;color:#242833}.tag[aria-pressed=true]{background:#202938;border-color:#202938;color:#fff;box-shadow:0 2px 5px #2029381c}.tag:focus-visible,.clear:focus-visible{outline:3px solid #a9c7ff;outline-offset:3px}.footer{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;padding-top:16px;border-top:1px solid #eef0f4}.selection{color:#6c7180;font-size:13px;line-height:1.5}.clear{padding:7px 10px;border:1px solid #e0e3e9;border-radius:8px;background:#fff;color:#4d5360;font:inherit;font-size:13px;cursor:pointer}.clear:hover{background:#f5f6f8}.clear:disabled{opacity:.45;cursor:not-allowed}@media(max-width:480px){body{padding:12px}.tag-demo{padding:20px 16px;border-radius:14px}.tags{gap:8px}.tag{font-size:13px;padding:7px 10px}.heading h1{font-size:18px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="tag-demo">
+  <div class="heading">
+    <h1>Choose tags</h1>
+    <span class="count" id="tagCount">15 tags</span>
+  </div>
+  <div class="tags" id="tags" aria-label="Technology tags"></div>
+  <div class="footer">
+    <div class="selection" id="selection" role="status" aria-live="polite">No tags selected</div>
+    <button class="clear" id="clearTags" type="button" disabled>Clear selection</button>
+  </div>
+</main>
+<script>
+(() => {
+  const tags = [
+    { id: "javascript", label: "Javascript" },
+    { id: "express", label: "Express" },
+    { id: "vue", label: "Vue" },
+    { id: "jest", label: "Jest" },
+    { id: "next", label: "Next" },
+    { id: "typescript", label: "Typescript" },
+    { id: "redis", label: "Redis" },
+    { id: "git", label: "Git" },
+    { id: "knockout", label: "Knockout" },
+    { id: "vite", label: "Vite" },
+    { id: "cypress", label: "Cypress" },
+    { id: "storybook", label: "Storybook" },
+    { id: "tailwind", label: "Tailwind" },
+    { id: "backbone", label: "Backbone" },
+    { id: "node", label: "Node" }
+  ];
+
+  const container = document.getElementById("tags");
+  const selection = document.getElementById("selection");
+  const clearButton = document.getElementById("clearTags");
+  const selected = new Set();
+
+  function updateSelection() {
+    const labels = tags.filter(tag => selected.has(tag.id)).map(tag => tag.label);
+    selection.textContent = labels.length ? "Selected: " + labels.join(", ") : "No tags selected";
+    clearButton.disabled = labels.length === 0;
+  }
+
+  function renderTags() {
+    const fragment = document.createDocumentFragment();
+
+    tags.forEach(tag => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "tag";
+      button.textContent = tag.label;
+      button.dataset.tagId = tag.id;
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("click", () => {
+        const isSelected = selected.has(tag.id);
+        if (isSelected) selected.delete(tag.id);
+        else selected.add(tag.id);
+        button.setAttribute("aria-pressed", String(!isSelected));
+        updateSelection();
+      });
+      fragment.appendChild(button);
+    });
+
+    container.appendChild(fragment);
+  }
+
+  clearButton.addEventListener("click", () => {
+    selected.clear();
+    container.querySelectorAll(".tag").forEach(button => {
+      button.setAttribute("aria-pressed", "false");
+    });
+    updateSelection();
+  });
+
+  renderTags();
+  updateSelection();
+})();
+</script>
+</body>
+</html>
