@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pocket-shell-v54';
+const CACHE_NAME = 'pocket-shell-v55';
 const APP_FILES = ['./', './index.html', './manifest.json', './logo.svg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
