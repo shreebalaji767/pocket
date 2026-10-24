@@ -114,6 +114,67 @@ input,textarea,button{max-width:100%}
   .landingcontinue{margin-top:18px}
   .authcard{margin:auto}
 }
+
+/* Adaptive layout refinement: compact phones through ultrawide desktops. */
+:root{--page-gutter:clamp(10px,2.2vw,28px)}
+html{scroll-behavior:smooth;scroll-padding-top:12px}
+body{min-width:0;overflow-x:clip}
+.top{padding-inline:var(--page-gutter)}
+.wrap{width:100%;max-width:1440px;padding-inline:var(--page-gutter);gap:clamp(16px,2.5vw,36px)}
+.main{min-width:0;width:100%}
+.cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));align-items:stretch}
+.item{overflow-wrap:anywhere}
+.itemtop,.bottom,.item-footer-actions{min-width:0}
+.domain{min-width:0}
+.quickfilters{display:flex;align-items:center;gap:8px;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;padding:2px 1px 8px;scrollbar-width:thin}
+.quickfilters .chip{flex:0 0 auto;white-space:nowrap}
+.quicklabel{flex:0 0 auto}
+.filters{max-width:100%}
+.field input,.field textarea,.search input{min-width:0}
+button,.btn,.chip{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+@media(min-width:1200px){
+  .wrap{grid-template-columns:clamp(200px,18vw,245px) minmax(0,1fr)}
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .item{padding:18px}
+}
+@media(min-width:761px) and (max-width:1199px){
+  .wrap{grid-template-columns:clamp(165px,20vw,210px) minmax(0,1fr)}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .wrap{grid-template-columns:minmax(0,1fr)}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+  .quickfilters{margin-bottom:4px}
+  .heading{flex-wrap:wrap}
+  .heading>div{flex:1 1 220px}
+  .item-footer-actions .btn{flex:1}
+}
+@media(max-width:559px){
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .quicklabel{font-size:10px}
+  .meta{font-size:10px;letter-spacing:.35px}
+  .item-footer-actions .btn{min-width:0}
+  .modal{width:100%;padding:clamp(15px,4vw,20px)}
+  .modalhead h2{font-size:clamp(18px,5vw,21px)}
+  .authcard{padding:clamp(18px,5vw,28px)}
+}
+@media(max-width:360px){
+  .top>.brand{flex:1 1 100%}
+  .actions{width:100%}
+  .actions .btn{min-height:40px}
+  .heading h1{font-size:24px;letter-spacing:-.7px}
+  .item{padding:12px}
+  .itemtop{gap:6px}
+  .favicon{width:28px;height:28px}
+}
+@media(min-width:1600px){
+  .wrap{max-width:1560px}
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+}
+@media(hover:none){
+  .landingactions .btn:hover{transform:none;box-shadow:none}
+}
+
 </style></head>
 <body class="signed-out">
 <header class="top"><a class="brand" id="brandHome" href="./" aria-label="Pocket home — refresh page" title="Click to refresh this page" style="color:inherit;text-decoration:none"><span class="mark"><img src="./logo.svg" alt="" width="38" height="38"></span><span>Pocket</span></a><div class="actions"><button class="btn install" id="installPwa" type="button">⬇ <span class="installlabel">Install app</span></button><span id="currentAccount" class="btn accountname" hidden></span><button class="btn" id="switchAccount" type="button" hidden>Switch / log out</button><button class="btn" id="exportAccounts">↧ <span class="exportlabel">Export accounts</span></button><button class="btn" id="importAccounts">↥ <span class="exportlabel">Import accounts</span></button><input id="accountsFile" type="file" accept=".json,application/json" hidden><button class="btn" id="export">↧ <span class="exportlabel">Export links</span></button><button class="btn" id="theme" aria-label="Toggle dark mode">☾</button><button class="btn primary" id="add">＋ Save link</button></div></header>
