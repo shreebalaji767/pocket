@@ -334,6 +334,45 @@ button,.btn,.chip{-webkit-tap-highlight-color:transparent;touch-action:manipulat
   .wrap{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
   .modal{max-height:calc(100dvh - 12px)}
 }
+
+/* Mobile/tablet refinement v2: simplify the library overview and prevent cramped cards. */
+@media(max-width:760px){
+  .wrap>aside>.hint{display:none}
+  .wrap>aside>.eyebrow:not(:first-child){display:block;margin:12px 2px 5px;font-size:10px;letter-spacing:1px}
+  #groupNav,#tagNav{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;gap:7px;width:100%;max-width:100%;margin:0 0 8px;padding:2px 1px 7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #groupNav::-webkit-scrollbar,#tagNav::-webkit-scrollbar{display:none}
+  #groupNav button,#tagNav button{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--muted);font-size:12px;white-space:nowrap}
+  #groupNav button.active,#tagNav button.active{background:var(--soft);border-color:color-mix(in srgb,var(--accent) 28%,var(--line));color:var(--accent)}
+  .wrap>aside>.nav.primary-nav{margin-bottom:14px}
+  .main{width:100%;min-width:0}
+  .searchrow{width:100%;min-width:0}
+  .quickfilters{overflow-x:auto;flex-wrap:nowrap;padding-bottom:5px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .quickfilters::-webkit-scrollbar{display:none}
+  .quickfilters .chip{flex:0 0 auto;white-space:nowrap}
+  .item{min-width:0;overflow:hidden}
+  .itemtop{align-items:flex-start}
+  .item-footer-actions{width:100%}
+  .item-footer-actions .btn{white-space:nowrap}
+}
+@media(max-width:560px){
+  .heading{display:flex;flex-direction:column;align-items:stretch}
+  .heading>div{width:100%}
+  .heading>.primary{width:100%;justify-content:center}
+  .searchrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+  .searchrow .search{grid-column:1/-1;width:100%}
+  .searchrow>#import{grid-column:2;justify-self:end}
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .item{padding:14px}
+  .item h2{font-size:16px;line-height:1.35}
+  .item-footer-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .item-footer-actions .btn{width:100%;min-width:0;padding:9px 7px;font-size:12px}
+  .navmenu-panel{z-index:50}
+  #nav.primary-nav{box-sizing:border-box}
+}
+@media(min-width:561px) and (max-width:760px){
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .item{display:block}
+}
 </style></head>
 <body class="signed-out">
 <header class="top"><a class="brand" id="brandHome" href="./" aria-label="Pocket home — refresh page" title="Click to refresh this page" style="color:inherit;text-decoration:none"><span class="mark"><img src="./logo.svg" alt="" width="38" height="38"></span><span>Pocket</span></a><div class="actions"><button class="btn primary" id="add">＋ Save link</button><div class="navmenu" id="navMenu"><button class="btn navmenu-trigger" id="navMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="navMenuPanel"><span aria-hidden="true">☰</span> <span class="menu-trigger-label">Menu</span><span class="menu-chevron" aria-hidden="true">⌄</span></button><div class="navmenu-panel" id="navMenuPanel" role="menu" aria-label="Pocket actions" hidden><button class="navmenu-item navmenu-install" id="installPwa" type="button" role="menuitem">⬇ <span class="installlabel">Install app</span></button><span id="currentAccount" class="navmenu-accountname" hidden></span><span id="navMenuAccount" hidden aria-hidden="true"></span><div class="navmenu-divider"></div><div class="navmenu-section">ACCOUNT</div><button class="navmenu-item" id="switchAccount" type="button" role="menuitem" hidden><span class="navmenu-icon">⇄</span><span>Switch / log out</span></button><div class="navmenu-section">BACKUP &amp; EXPORT</div><button class="navmenu-item" id="exportAccounts" type="button" role="menuitem"><span class="navmenu-icon">↧</span><span>Export accounts</span></button><button class="navmenu-item" id="importAccounts" type="button" role="menuitem"><span class="navmenu-icon">↥</span><span>Import accounts</span></button><input id="accountsFile" type="file" accept=".json,application/json" hidden><button class="navmenu-item" id="exportCsv" type="button" role="menuitem" title="Export links as a spreadsheet-friendly CSV"><span class="navmenu-icon">▦</span><span>Export CSV</span><span class="navmenu-badge">CSV</span></button><button class="navmenu-item" id="export" type="button" role="menuitem"><span class="navmenu-icon">⇩</span><span>Export links</span><span class="navmenu-badge">JSON</span></button><div class="navmenu-section">PREFERENCES</div><button class="navmenu-item" id="theme" type="button" role="menuitem" aria-label="Toggle dark mode"><span class="navmenu-icon">☾</span><span id="themeMenuLabel">Dark mode</span><span class="navmenu-shortcut" id="themeMenuState">Off</span></button></div></div></div></header>
