@@ -61,8 +61,8 @@ $('import').onclick=()=>$('file').click();$('file').onchange=async()=>{let f=$('
 
 // Defensive navigation handlers: keep page transitions visible even if storage initialization fails.
 const landingGateEl=$('landingGate'),registerGateEl=$('registerGate');
-$('landingContinue').addEventListener('click',()=>{landingGateEl.classList.remove('show');landingGateEl.style.display='none';registerGateEl.classList.add('show');registerGateEl.style.display='flex';});
-$('backLanding').addEventListener('click',()=>{registerGateEl.classList.remove('show');registerGateEl.style.display='none';landingGateEl.classList.add('show');landingGateEl.style.display='flex';});
+$('landingContinue').addEventListener('click',()=>{landingGateEl.classList.remove('show');registerGateEl.classList.add('show');});
+$('backLanding').addEventListener('click',()=>{registerGateEl.classList.remove('show');landingGateEl.classList.add('show');});
 initializeStorage();
 window.addEventListener('pageshow',event=>{if(!event.persisted)return;activeUsername=null;cryptoPassphrase=null;cryptoSalt=null;items=[];sessionId++;saveRevision++;document.body.classList.add('signed-out');$('registerGate').classList.remove('show');$('authGate').classList.remove('show');$('landingGate').classList.add('show');});
 })();
