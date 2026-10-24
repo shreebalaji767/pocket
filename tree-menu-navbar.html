@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f8fafc">
+<title>Tree Menu Navbar</title>
+<style>
+:root{--bg:#f8fafc;--surface:#fff;--text:#172033;--muted:#64748b;--border:#e2e8f0;--primary:#4f46e5;--primary-light:#eef2ff;--hover:#f1f5f9;--shadow:0 16px 40px #0f172a1f;--radius:12px}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button{font:inherit}
+.navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px;padding:0 5%;background:#fffffff2;border-bottom:1px solid var(--border);backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:11px;color:var(--text);font-size:18px;font-weight:800;text-decoration:none;white-space:nowrap}.brand-icon{display:grid;place-items:center;width:38px;height:38px;color:#fff;background:var(--primary);border-radius:11px;font-size:20px}
+.nav-area{display:flex;align-items:center;gap:8px}.nav-list,.submenu{padding:0;margin:0;list-style:none}.nav-list{display:flex;align-items:center;gap:5px}.nav-item{position:relative}
+.nav-button,.menu-button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:11px 13px;color:var(--text);background:transparent;border:0;border-radius:9px;cursor:pointer;text-align:left;transition:background 160ms ease,color 160ms ease}
+.nav-button{width:auto;font-weight:650;white-space:nowrap}.nav-button:hover,.menu-button:hover{color:var(--primary);background:var(--hover)}.nav-button[aria-expanded=true],.menu-button[aria-expanded=true]{color:var(--primary);background:var(--primary-light)}
+.chevron{flex:0 0 auto;width:7px;height:7px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform 160ms ease}
+[aria-expanded=true]>.chevron{transform:rotate(225deg) translate(-1px,-1px)}
+.nav-dropdown,.submenu-panel{display:none;position:absolute;top:calc(100% + 9px);left:0;width:290px;padding:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);animation:appear 150ms ease-out}
+.nav-dropdown.open,.submenu-panel.open{display:block}.nav-dropdown:before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px}.submenu-panel{top:-8px;left:calc(100% + 7px)}.submenu-panel.opens-left{left:auto;right:calc(100% + 7px)}
+.menu-button{min-height:43px;font-size:14px}.menu-button .label{overflow:hidden;text-overflow:ellipsis}.menu-button .chevron{transform:rotate(-45deg)}.menu-button[aria-expanded=true]>.chevron{transform:rotate(135deg)}.menu-button.leaf{cursor:pointer}.menu-button.selected{color:var(--primary);background:var(--primary-light);font-weight:650}
+.menu-icon{display:inline-grid;place-items:center;width:23px;height:23px;flex:0 0 23px;margin-right:3px;color:var(--primary);background:var(--primary-light);border-radius:6px;font-size:11px;font-weight:800}.button-start{display:flex;align-items:center;min-width:0;gap:8px}
+.mobile-toggle{display:none;place-items:center;width:42px;height:42px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:21px}
+.page{width:min(100% - 40px,1120px);margin:64px auto}.hero{padding:clamp(28px,6vw,64px);background:var(--surface);border:1px solid var(--border);border-radius:22px;box-shadow:0 8px 30px #0f172a0a}
+.eyebrow{display:inline-block;margin-bottom:14px;padding:7px 11px;color:var(--primary);background:var(--primary-light);border-radius:100px;font-size:12px;font-weight:750;letter-spacing:.07em;text-transform:uppercase}
+h1{margin:0 0 16px;font-size:clamp(30px,5vw,48px);letter-spacing:-.045em;line-height:1.12}.hero p{max-width:620px;margin:0;color:var(--muted);font-size:16px;line-height:1.8}
+.selection{margin-top:30px;padding:18px;background:var(--bg);border:1px solid var(--border);border-radius:12px}.selection small{display:block;margin-bottom:6px;color:var(--muted)}#selectedItem{color:var(--primary);font-weight:750;overflow-wrap:anywhere}
+button:focus-visible,a:focus-visible{outline:3px solid #818cf8;outline-offset:3px}@keyframes appear{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){.navbar{min-height:64px;padding:0 16px}.mobile-toggle{display:grid}.nav-area{display:none;position:absolute;top:calc(100% + 1px);left:0;right:0;align-items:stretch;padding:12px 16px 18px;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow)}.nav-area.mobile-open{display:block}.nav-list{display:flex;align-items:stretch;flex-direction:column;gap:4px}.nav-item{width:100%}.nav-button{width:100%;padding:13px}.nav-dropdown,.submenu-panel,.submenu-panel.opens-left{position:static;width:100%;margin:5px 0 7px;padding:6px;border-radius:10px;box-shadow:none;background:#fbfcff;animation:none}.submenu-panel{margin-left:5px;width:calc(100% - 5px);border-left:2px solid #c7d2fe}.nav-dropdown:before{display:none}.menu-button{min-height:44px}.page{width:calc(100% - 28px);margin:28px auto}.hero{border-radius:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="navbar">
+<a class="brand" href="#" aria-label="Tree Menu home"><span class="brand-icon" aria-hidden="true">⌘</span><span>TreeMenu</span></a>
+<button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navArea">☰</button>
+<nav class="nav-area" id="navArea" aria-label="Main navigation"><ul class="nav-list" id="navList"></ul></nav>
+</header>
+<main class="page"><section class="hero"><span class="eyebrow">Design system</span><h1>Explore your design system.</h1><p>Navigate through foundations, reusable components, and gestures. Select any menu item to see its location in the tree.</p><div class="selection" aria-live="polite"><small>Selected menu item</small><div id="selectedItem">None selected</div></div></section></main>
+<script>
+"use strict";
+const menu=[
+{id:"foundation",label:"Foundation",children:[
+{id:"design-principles",label:"Design Principles",children:[{id:"clarity",label:"Clarity"},{id:"efficiency",label:"Efficiency"},{id:"consistency",label:"Consistency"},{id:"beauty",label:"Beauty"}]},
+{id:"colors",label:"Colors",children:[{id:"neutrals",label:"Neutrals",children:[{id:"neutral-50",label:"Slate 50"},{id:"neutral-500",label:"Slate 500"},{id:"neutral-900",label:"Slate 900"}]},{id:"brand-colors",label:"Brand Colors"},{id:"functional-colors",label:"Functional Colors"}]},
+{id:"typography",label:"Typography",children:[{id:"font-family",label:"Font Family"},{id:"font-size",label:"Font Size"},{id:"font-weight",label:"Font Weight"}]},
+{id:"icons",label:"Icons",children:[{id:"icon-family",label:"Icon Family"},{id:"icon-size",label:"Icon Size"},{id:"icon-weight",label:"Icon Weight"}]}
+]},
+{id:"components",label:"Components",children:[
+{id:"buttons",label:"Buttons",children:[{id:"primary-button",label:"Primary Button"},{id:"secondary-button",label:"Secondary Button"}]},
+{id:"cards",label:"Cards",children:[{id:"profile-card",label:"Profile Card"},{id:"product-card",label:"Product Card"}]}
+]},
+{id:"gestures",label:"Gestures",children:[{id:"tap",label:"Tap"},{id:"swipe",label:"Swipe",children:[{id:"swipe-left",label:"Swipe Left"},{id:"swipe-right",label:"Swipe Right"}]}]}
+];
+const navList=document.getElementById("navList"),navArea=document.getElementById("navArea"),mobileToggle=document.getElementById("mobileToggle"),selectedItem=document.getElementById("selectedItem");
+function chevron(){const el=document.createElement("span");el.className="chevron";el.setAttribute("aria-hidden","true");return el}
+function closePanel(panel){panel.classList.remove("open");const trigger=panel.previousElementSibling;if(trigger&&trigger.matches("button"))trigger.setAttribute("aria-expanded","false");panel.querySelectorAll(".submenu-panel.open").forEach(closePanel)}
+function closeSiblings(container,keep){container.querySelectorAll(":scope > .nav-dropdown.open,:scope > .submenu-panel.open").forEach(panel=>{if(panel!==keep)closePanel(panel)})}
+function pathFor(id,items=menu,path=[]){for(const item of items){const next=[...path,item.label];if(item.id===id)return next.join(" / ");if(item.children){const found=pathFor(id,item.children,next);if(found)return found}}return id}
+function build(items,parent,depth=0){items.forEach(item=>{
+const li=document.createElement("li");li.className="nav-item";const btn=document.createElement("button");btn.type="button";btn.className=depth===0?"nav-button":"menu-button";btn.dataset.id=item.id;
+const start=document.createElement("span");start.className="button-start";
+if(depth===0){const icon=document.createElement("span");icon.className="menu-icon";icon.setAttribute("aria-hidden","true");icon.textContent=item.label==="Foundation"?"F":item.label==="Components"?"C":"G";start.append(icon)}
+const label=document.createElement("span");label.className="label";label.textContent=item.label;start.append(label);btn.append(start);
+const hasChildren=Array.isArray(item.children)&&item.children.length>0;
+if(hasChildren){btn.append(chevron());btn.setAttribute("aria-expanded","false");const panel=document.createElement("div");panel.className=depth===0?"nav-dropdown":"submenu-panel";panel.dataset.panel=item.id;const list=document.createElement("ul");list.className="submenu";panel.append(list);build(item.children,list,depth+1);
+btn.addEventListener("click",()=>{const open=!panel.classList.contains("open");closeSiblings(li.parentElement,panel);if(open){panel.classList.add("open");btn.setAttribute("aria-expanded","true");if(depth>0&&innerWidth>760){panel.classList.remove("opens-left");if(panel.getBoundingClientRect().right>innerWidth-8)panel.classList.add("opens-left")}}else closePanel(panel)});li.append(btn,panel)
+}else{btn.classList.add("leaf");btn.addEventListener("click",()=>{document.querySelectorAll(".menu-button.selected").forEach(el=>el.classList.remove("selected"));btn.classList.add("selected");selectedItem.textContent=pathFor(item.id);if(innerWidth<=760){closeAll();navArea.classList.remove("mobile-open");mobileToggle.setAttribute("aria-expanded","false");mobileToggle.setAttribute("aria-label","Open navigation");mobileToggle.textContent="☰"}});li.append(btn)}
+parent.append(li)
+})}
+function closeAll(){document.querySelectorAll(".nav-dropdown.open,.submenu-panel.open").forEach(closePanel);document.querySelectorAll(".nav-button[aria-expanded=true],.menu-button[aria-expanded=true]").forEach(btn=>btn.setAttribute("aria-expanded","false"))}
+build(menu,navList);
+mobileToggle.addEventListener("click",()=>{const open=navArea.classList.toggle("mobile-open");mobileToggle.setAttribute("aria-expanded",String(open));mobileToggle.setAttribute("aria-label",open?"Close navigation":"Open navigation");mobileToggle.textContent=open?"✕":"☰";if(!open)closeAll()});
+document.addEventListener("click",event=>{if(!event.target.closest(".navbar")){closeAll();navArea.classList.remove("mobile-open");mobileToggle.setAttribute("aria-expanded","false");mobileToggle.setAttribute("aria-label","Open navigation");mobileToggle.textContent="☰"}});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeAll();navArea.classList.remove("mobile-open");mobileToggle.setAttribute("aria-expanded","false");mobileToggle.setAttribute("aria-label","Open navigation");mobileToggle.textContent="☰";mobileToggle.focus()}});
+window.addEventListener("resize",()=>{closeAll();if(innerWidth>760){navArea.classList.remove("mobile-open");mobileToggle.setAttribute("aria-expanded","false");mobileToggle.textContent="☰"}});
+</script>
+</body>
+</html>
