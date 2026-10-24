@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101a33">
+<meta name="description" content="A responsive, searchable design-system tree menu.">
+<link rel="manifest" href="./manifest.json">
+<title>Tree Menu — Design System</title>
+<style>
+:root{--navy:#101a33;--blue:#4263eb;--blue-light:#edf2ff;--text:#202b40;--muted:#748096;--border:#e5e9f1;--surface:#fff;--bg:#f5f7fb;--radius:14px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit}button{cursor:pointer}
+.navbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:72px;padding:12px clamp(16px,4vw,48px);color:white;background:var(--navy);box-shadow:0 4px 20px #101a3318}
+.brand{display:flex;align-items:center;gap:12px}.brand-logo{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--blue);font-size:21px;font-weight:800}.brand-title{font-size:16px;font-weight:750}.brand-subtitle{margin-top:3px;color:#b6c2dc;font-size:12px}
+.nav-actions{display:flex;align-items:center;gap:9px}.nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid #ffffff30;border-radius:10px;color:white;background:#ffffff0d;font-weight:650}.nav-btn:hover{background:#ffffff1b}.nav-btn.install{border-color:var(--blue);background:var(--blue)}.nav-btn:disabled{cursor:not-allowed;opacity:.55}
+main{width:min(100% - 32px,1080px);margin:38px auto 60px}.eyebrow{margin:0 0 9px;color:var(--blue);font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}h1{margin:0;font-size:clamp(25px,4vw,34px);letter-spacing:-1px}.description{margin:10px 0 0;color:var(--muted);line-height:1.7}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 250px;align-items:start;gap:20px;margin-top:24px}.panel,.side-card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:0 5px 24px #19294b06}.panel{overflow:hidden}.panel-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px;border-bottom:1px solid var(--border)}.panel-title{margin:0;font-size:16px;font-weight:750}.item-count{padding:5px 9px;border-radius:8px;color:#4256a8;background:var(--blue-light);font-size:12px;font-weight:750}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border)}.search-wrap{position:relative;flex:1 1 190px}.search-icon{position:absolute;top:50%;left:12px;color:var(--muted);transform:translateY(-50%);pointer-events:none}.search-input{width:100%;min-height:42px;padding:10px 12px 10px 36px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fbfcfe}.search-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #4263eb1a}.tool-btn{min-height:42px;padding:0 13px;border:1px solid var(--border);border-radius:10px;color:var(--text);background:white;font-weight:650}.tool-btn:hover{background:#f6f8fc}
+.tree{padding:14px 14px 18px}.tree ul{margin:0;padding:0 0 0 25px;list-style:none}.tree>ul{padding-left:0}.tree li{position:relative}.tree li>ul{margin-left:14px;border-left:1px solid #e3e8f2}.tree li>ul[hidden]{display:none}.tree-row{display:flex;align-items:center;gap:7px;min-height:43px;padding:4px 8px;border-radius:9px}.tree-row:hover{background:#f6f8fc}.tree-row.selected{color:#2949c7;background:var(--blue-light)}.tree-toggle{display:grid;flex:0 0 25px;place-items:center;width:25px;height:27px;padding:0;border:0;border-radius:6px;color:#7d899e;background:transparent}.tree-toggle:hover{background:#e9edf6}.chevron{display:inline-block;font-size:16px;line-height:1;transition:transform .18s}.tree-toggle[aria-expanded=true] .chevron{transform:rotate(90deg)}.tree-toggle.leaf{visibility:hidden}.node-icon{display:grid;flex:0 0 29px;place-items:center;width:29px;height:29px;border:1px solid #e7ebf5;border-radius:8px;color:#5367ba;background:#f7f8fe;font-size:11px;font-weight:800}.tree-row.selected .node-icon{background:white}.node-label{flex:1;min-width:0;padding:5px 0;overflow-wrap:anywhere;font-weight:550;line-height:1.4}.child-count{color:#8994a8;font-size:11px}.empty-state{padding:36px 12px;color:var(--muted);text-align:center}
+.sidebar{display:grid;gap:16px}.side-card{padding:19px}.side-card h2{margin:0 0 12px;font-size:14px}.side-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.7;overflow-wrap:anywhere}.selected-value{display:block;margin-top:8px;color:var(--blue);font-weight:700;overflow-wrap:anywhere}.stat-line{display:flex;justify-content:space-between;gap:10px;margin-top:14px;color:var(--muted);font-size:12px}.stat-line strong{color:var(--text)}.status-dot{display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#24a36b}footer{padding:20px 16px;color:var(--muted);font-size:12px;text-align:center}
+button:focus-visible,input:focus-visible{outline:3px solid #7c93ff;outline-offset:3px}
+@media(max-width:760px){.workspace{grid-template-columns:1fr}.sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}main{margin-top:27px}}
+@media(max-width:520px){.navbar{align-items:flex-start;flex-direction:column;gap:13px;padding:13px 16px}.nav-actions{width:100%}.nav-btn{flex:1;padding:0 9px;font-size:12px}main{width:calc(100% - 22px);margin-top:22px}.sidebar{grid-template-columns:1fr}.panel-header{padding:16px}.toolbar{padding:13px}.tree{padding:10px 8px 14px}.tree ul{padding-left:17px}.tree>ul{padding-left:0}.tree li>ul{margin-left:9px}.tree-row{gap:5px;padding:4px 3px}.node-icon{flex-basis:26px;width:26px;height:27px}.child-count{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="navbar">
+  <div class="brand"><div class="brand-logo" aria-hidden="true">T</div><div><div class="brand-title">Tree Menu</div><div class="brand-subtitle">Design System Explorer</div></div></div>
+  <nav class="nav-actions" aria-label="Main navigation">
+    <button class="nav-btn install" id="installBtn" type="button"><span aria-hidden="true">⇩</span><span id="installLabel">Install App</span></button>
+    <button class="nav-btn" id="logoutBtn" type="button"><span aria-hidden="true">↪</span>Logout</button>
+  </nav>
+</header>
+<main>
+  <section><p class="eyebrow">Workspace / Navigation</p><h1>Explore your design system</h1><p class="description">Browse foundations, components, and gestures in one organized tree. Expand a section or search for a specific item.</p></section>
+  <div class="workspace">
+    <section class="panel" aria-labelledby="treeHeading">
+      <div class="panel-header"><h2 class="panel-title" id="treeHeading">Menu structure</h2><span class="item-count" id="itemCount">0 items</span></div>
+      <div class="toolbar"><div class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><input class="search-input" id="searchInput" type="search" placeholder="Search menu items..." aria-label="Search menu items" autocomplete="off"></div><button class="tool-btn" id="expandAllBtn" type="button">Expand all</button><button class="tool-btn" id="collapseAllBtn" type="button">Collapse all</button></div>
+      <div class="tree" id="tree" aria-label="Expandable menu tree"></div>
+    </section>
+    <aside class="sidebar">
+      <section class="side-card"><h2>Selected item</h2><p id="selectionHelp">Select any item in the tree to see it here.</p><span class="selected-value" id="selectedValue">Nothing selected</span></section>
+      <section class="side-card"><h2>Menu overview</h2><p>Navigate the hierarchy using the arrows beside items that contain nested sections.</p><div class="stat-line"><span>Total items</span><strong id="totalStat">0</strong></div><div class="stat-line"><span>Top-level sections</span><strong id="sectionStat">0</strong></div><div class="stat-line"><span>App status</span><strong><span class="status-dot"></span>Ready</strong></div></section>
+    </aside>
+  </div>
+</main>
+<footer>Tree Menu · HTML5, CSS3 &amp; JavaScript</footer>
+<script>
+"use strict";
+const menu=[
+{id:"foundation",label:"Foundation",children:[
+{id:"design-principles",label:"Design Principles",children:[{id:"clarity",label:"Clarity"},{id:"efficiency",label:"Efficiency"},{id:"consistency",label:"Consistency"},{id:"beauty",label:"Beauty"}]},
+{id:"colors",label:"Colors",children:[{id:"neutrals",label:"Neutrals",children:[{id:"neutral-50",label:"Slate 50"},{id:"neutral-500",label:"Slate 500"},{id:"neutral-900",label:"Slate 900"}]},{id:"brand-colors",label:"Brand Colors"},{id:"functional-colors",label:"Functional Colors"}]},
+{id:"typography",label:"Typography",children:[{id:"font-family",label:"Font Family"},{id:"font-size",label:"Font Size"},{id:"font-weight",label:"Font Weight"}]},
+{id:"icons",label:"Icons",children:[{id:"icon-family",label:"Icon Family"},{id:"icon-size",label:"Icon Size"},{id:"icon-weight",label:"Icon Weight"}]}]},
+{id:"components",label:"Components",children:[
+{id:"buttons",label:"Buttons",children:[{id:"primary-button",label:"Primary Button"},{id:"secondary-button",label:"Secondary Button"}]},
+{id:"cards",label:"Cards",children:[{id:"profile-card",label:"Profile Card"},{id:"product-card",label:"Product Card"}]}]},
+{id:"gestures",label:"Gestures",children:[{id:"tap",label:"Tap"},{id:"swipe",label:"Swipe",children:[{id:"swipe-left",label:"Swipe Left"},{id:"swipe-right",label:"Swipe Right"}]}]}];
+const $=id=>document.getElementById(id);const tree=$("tree");const searchInput=$("searchInput");let selectedId=null;let installPrompt=null;
+function countNodes(nodes){return nodes.reduce((total,node)=>total+1+countNodes(node.children||[]),0)}
+function findNode(nodes,id){for(const node of nodes){if(node.id===id)return node;const found=findNode(node.children||[],id);if(found)return found}return null}
+function collectMatchingIds(nodes,query,matches=new Set()){let any=false;for(const node of nodes){const childMatches=collectMatchingIds(node.children||[],query,matches);const self=node.label.toLowerCase().includes(query);if(self||childMatches){matches.add(node.id);any=true}}return any}
+function createNode(node,matchingIds,query){const li=document.createElement("li");const children=node.children||[];const hasChildren=children.length>0;li.hidden=!!query&&!matchingIds.has(node.id);li.dataset.nodeId=node.id;
+const row=document.createElement("div");row.className="tree-row"+(selectedId===node.id?" selected":"");if(selectedId===node.id)row.setAttribute("aria-current","true");
+const toggle=document.createElement("button");toggle.type="button";toggle.className="tree-toggle"+(!hasChildren?" leaf":"");toggle.setAttribute("aria-label",hasChildren?"Toggle "+node.label:node.label);
+if(hasChildren){toggle.setAttribute("aria-expanded",query?"true":"false");toggle.innerHTML='<span class="chevron" aria-hidden="true">›</span>'}else{toggle.tabIndex=-1;toggle.setAttribute("aria-hidden","true");toggle.textContent="›"}
+const icon=document.createElement("span");icon.className="node-icon";icon.setAttribute("aria-hidden","true");icon.textContent=hasChildren?"▤":"•";
+const label=document.createElement("button");label.type="button";label.className="node-label";label.style.cssText="text-align:left;border:0;background:transparent;color:inherit;cursor:pointer";label.textContent=node.label;
+row.append(toggle,icon,label);
+if(hasChildren){const count=document.createElement("span");count.className="child-count";count.textContent=children.length;count.setAttribute("aria-label",children.length+" direct children");row.append(count)}
+label.addEventListener("click",()=>selectNode(node.id));icon.addEventListener("click",()=>selectNode(node.id));
+if(hasChildren)toggle.addEventListener("click",()=>{const childList=li.querySelector(":scope > ul");const expanded=toggle.getAttribute("aria-expanded")==="true";toggle.setAttribute("aria-expanded",String(!expanded));childList.hidden=expanded});
+li.append(row);
+if(hasChildren){const childList=document.createElement("ul");childList.hidden=!query;childList.setAttribute("aria-label",node.label+" children");for(const child of children)childList.append(createNode(child,matchingIds,query));li.append(childList)}
+return li}
+function renderTree(){const query=searchInput.value.trim().toLowerCase();const matchingIds=new Set();if(query)collectMatchingIds(menu,query,matchingIds);const list=document.createElement("ul");list.setAttribute("role","tree");for(const node of menu)list.append(createNode(node,matchingIds,query));tree.replaceChildren(list);if(query&&!matchingIds.size){const empty=document.createElement("div");empty.className="empty-state";empty.textContent="No matching items. Try another search.";tree.append(empty)}}
+function selectNode(id){const node=findNode(menu,id);if(!node)return;selectedId=id;$("selectedValue").textContent=node.label;$("selectionHelp").textContent="Current selection";renderTree()}
+function setAllBranches(expanded){tree.querySelectorAll(".tree li > ul").forEach(list=>{list.hidden=!expanded});tree.querySelectorAll(".tree-toggle[aria-expanded]").forEach(button=>button.setAttribute("aria-expanded",String(expanded)))}
+function updateStats(){const total=countNodes(menu);$("itemCount").textContent=total+" items";$("totalStat").textContent=total;$("sectionStat").textContent=menu.length}
+$("expandAllBtn").addEventListener("click",()=>setAllBranches(true));$("collapseAllBtn").addEventListener("click",()=>setAllBranches(false));searchInput.addEventListener("input",renderTree);
+window.addEventListener("beforeinstallprompt",event=>{event.preventDefault();installPrompt=event;$("installBtn").disabled=false;$("installLabel").textContent="Install App"});
+$("installBtn").addEventListener("click",async()=>{if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("installLabel").textContent="Install App";return}if(window.matchMedia("(display-mode: standalone)").matches){$("installLabel").textContent="App Installed";return}alert("To install, open your browser menu and choose Install app or Add to Home Screen. Use HTTPS (or localhost) with a valid manifest and service worker.")});
+window.addEventListener("appinstalled",()=>{installPrompt=null;$("installLabel").textContent="App Installed"});
+$("logoutBtn").addEventListener("click",()=>{if(!window.confirm("Are you sure you want to log out?"))return;sessionStorage.removeItem("pocketSessionUser");sessionStorage.removeItem("pocketActiveUser");window.location.href="../"});
+updateStats();renderTree();
+if("serviceWorker"in navigator&&location.protocol!=="file:")window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(error=>console.error("Service worker registration failed:",error)));
+</script>
+</body>
+</html>
