@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Pocket · Header Actions Menu Demo</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#202124;background:#f6f7f9;font-synthesis:none;text-rendering:optimizeLegibility}
+*{box-sizing:border-box}body{margin:0;min-height:100vh}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 28px;background:#fff;border-bottom:1px solid #e8eaf0}.brand{font-size:19px;font-weight:750;letter-spacing:-.5px;white-space:nowrap}.navbar{display:flex;align-items:center;gap:6px}.navlink{color:#626673;text-decoration:none;font-size:14px;padding:10px 12px;border-radius:9px}.navlink:hover,.navlink.active{color:#22242a;background:#f2f3f6}.disclosure{position:relative}.trigger{display:flex;align-items:center;gap:9px;min-height:40px;padding:8px 12px;border:1px solid #e3e5ea;border-radius:10px;background:#fff;color:#292c34;font:inherit;font-size:14px;cursor:pointer}.trigger:hover,.trigger[aria-expanded=true]{background:#f7f8fa;border-color:#cbd0d9}.trigger svg{width:19px;height:19px}.chevron{width:14px!important;height:14px!important;transition:transform .18s}.trigger[aria-expanded=true] .chevron{transform:rotate(180deg)}button:focus-visible,a:focus-visible{outline:3px solid #a9c7ff;outline-offset:2px}.menu{position:absolute;z-index:10;top:calc(100% + 9px);right:0;width:218px;padding:6px;background:#fff;border:1px solid #e6e8ed;border-radius:12px;box-shadow:0 14px 38px #1720331c;opacity:0;visibility:hidden;transform:translateY(-5px);transition:opacity .16s,transform .16s,visibility .16s}.menu.open{opacity:1;visibility:visible;transform:translateY(0)}.menuitem{display:flex;align-items:center;gap:11px;width:100%;padding:11px 10px;border:0;border-radius:8px;background:transparent;color:#30333b;text-align:left;font:inherit;font-size:14px;cursor:pointer}.menuitem:hover{background:#f3f4f7}.menuitem svg{width:18px;height:18px;flex:none;color:#666b77}.menuitem span{flex:1}.separator{height:1px;margin:5px 4px;background:#eceef2}.menuitem.delete{color:#d92d20}.menuitem.delete svg{color:inherit}.menuitem.delete:hover{background:#fff0ef}.main{max-width:720px;margin:100px auto;padding:0 24px;text-align:center}.main h1{font-size:clamp(26px,4vw,38px);letter-spacing:-1px;margin:0 0 12px}.main p{color:#666b76;line-height:1.7}.status{min-height:24px;margin-top:20px;color:#2563eb;font-size:14px}@media(max-width:560px){.topbar{height:64px;padding:0 14px;gap:10px}.brand{font-size:17px}.navbar{gap:2px}.navlink{display:none}.trigger{width:42px;justify-content:center;padding:9px}.trigger .triggerlabel,.trigger .chevron{display:none}.menu{width:210px}.main{margin-top:60px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Pocket</div>
+  <nav class="navbar" aria-label="Main navigation">
+    <a class="navlink active" href="#home">Home</a>
+    <a class="navlink" href="#library">Library</a>
+    <a class="navlink" href="#settings">Settings</a>
+    <div class="disclosure" id="disclosure">
+      <button class="trigger" id="menuTrigger" type="button" aria-label="Open actions menu" aria-haspopup="true" aria-expanded="false" aria-controls="actionMenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>
+        <span class="triggerlabel">Actions</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="menu" id="actionMenu" role="group" aria-label="Item actions" inert>
+        <button class="menuitem" type="button" data-action="edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg><span>Edit</span></button>
+        <button class="menuitem" type="button" data-action="duplicate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>Duplicate</span></button>
+        <button class="menuitem" type="button" data-action="favourite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg><span id="favouriteLabel">Favourite</span></button>
+        <button class="menuitem" type="button" data-action="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.5 6.6-4M8.7 13.5l6.6 4"/></svg><span>Share</span></button>
+        <div class="separator" aria-hidden="true"></div>
+        <button class="menuitem delete" type="button" data-action="delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 5v5m4-5v5"/></svg><span>Delete</span></button>
+      </div>
+    </div>
+  </nav>
+</header>
+<main class="main" id="home"><h1>Header Actions Menu</h1><p>This is a horizontal navbar with a floating disclosure menu aligned to the top-right. It is not a sidebar.</p><div class="status" id="status" role="status" aria-live="polite"></div></main>
+<script>
+(() => {
+  const root = document.getElementById("disclosure");
+  const trigger = document.getElementById("menuTrigger");
+  const menu = document.getElementById("actionMenu");
+  const status = document.getElementById("status");
+  const favouriteLabel = document.getElementById("favouriteLabel");
+  let open = false;
+  let favourite = false;
+
+  function setOpen(next, focusFirst = false) {
+    open = next;
+    trigger.setAttribute("aria-expanded", String(open));
+    menu.classList.toggle("open", open);
+    menu.inert = !open;
+    if (open && focusFirst) menu.querySelector("button").focus();
+  }
+
+  trigger.addEventListener("click", () => setOpen(!open));
+  document.addEventListener("click", event => {
+    if (!root.contains(event.target)) setOpen(false);
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && open) {
+      setOpen(false);
+      trigger.focus();
+    }
+    if (event.key === "ArrowDown" && event.target === trigger) {
+      event.preventDefault();
+      setOpen(true, true);
+    }
+  });
+  menu.addEventListener("keydown", event => {
+    const buttons = [...menu.querySelectorAll("button")];
+    const index = buttons.indexOf(document.activeElement);
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const direction = event.key === "ArrowDown" ? 1 : -1;
+      buttons[(index + direction + buttons.length) % buttons.length].focus();
+    }
+    if (event.key === "Tab") setOpen(false);
+  });
+  menu.addEventListener("click", async event => {
+    const button = event.target.closest("[data-action]");
+    if (!button) return;
+    switch (button.dataset.action) {
+      case "edit":
+        status.textContent = "Edit action selected.";
+        console.log("Edit selected");
+        break;
+      case "duplicate":
+        status.textContent = "Duplicate action selected.";
+        console.log("Duplicate selected");
+        break;
+      case "favourite":
+        favourite = !favourite;
+        favouriteLabel.textContent = favourite ? "Remove Favourite" : "Favourite";
+        status.textContent = favourite ? "Marked as favourite." : "Removed from favourites.";
+        console.log("Favourite:", favourite);
+        break;
+      case "share":
+        try {
+          if (navigator.share) {
+            await navigator.share({ title: document.title, url: location.href });
+            status.textContent = "Share action completed.";
+          } else if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(location.href);
+            status.textContent = "Page link copied.";
+          } else {
+            status.textContent = "Sharing or clipboard access is unavailable in this browser.";
+          }
+        } catch (error) {
+          if (error.name !== "AbortError") status.textContent = "Unable to share this link.";
+        }
+        break;
+      case "delete":
+        if (confirm("Are you sure you want to delete this item?")) {
+          status.textContent = "Delete action selected.";
+          console.log("Deleted");
+        }
+        break;
+    }
+    setOpen(false);
+    trigger.focus();
+  });
+})();
+</script>
+</body>
+</html>
