@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pocket-shell-v46';
+const CACHE_NAME = 'pocket-shell-v47';
 const APP_FILES = ['./', './index.html', './manifest.json', './logo.svg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
@@ -23,6 +23,8 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Cache successful same-origin assets, but never return HTML as a fallback
+  // for a failed image, script, stylesheet, or other non-navigation request.
   event.respondWith(caches.match(request).then(cached => {
     if (cached) return cached;
     return fetch(request).then(response => {
@@ -31,6 +33,6 @@ self.addEventListener('fetch', event => {
         caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
       }
       return response;
-    }).catch(() => caches.match('./index.html'));
+    });
   }));
 });
