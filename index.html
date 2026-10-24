@@ -428,6 +428,31 @@ button,.btn,.chip{-webkit-tap-highlight-color:transparent;touch-action:manipulat
   .wrap>aside>.eyebrow:first-child,.wrap>aside>#nav,.wrap>aside>.hint{grid-column:1/-1}
   .wrap>aside>#groupNav,.wrap>aside>#tagNav{grid-column:auto}
 }
+
+/* Compact anchored menu for phones and tablets */
+@media(max-width:760px){
+  .top{z-index:40}
+  .actions,.navmenu{position:relative}
+  .navmenu-panel{
+    position:absolute;
+    top:calc(100% + 8px);
+    right:0;
+    left:auto;
+    width:min(290px,calc(100vw - 24px));
+    max-height:min(56dvh,390px);
+    overflow-x:hidden;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    border-radius:14px;
+    box-shadow:0 12px 30px #102a4326;
+  }
+}
+@media(max-width:420px){
+  .navmenu-panel{width:min(280px,calc(100vw - 20px));max-height:min(52dvh,350px)}
+}
+@media(orientation:landscape) and (max-height:500px) and (max-width:900px){
+  .navmenu-panel{top:calc(100% + 5px);max-height:45dvh}
+}
 </style></head>
 <body class="signed-out">
 <header class="top"><a class="brand" id="brandHome" href="./" aria-label="Pocket home — refresh page" title="Click to refresh this page" style="color:inherit;text-decoration:none"><span class="mark"><img src="./logo.svg" alt="" width="38" height="38"></span><span>Pocket</span></a><div class="actions"><button class="btn primary" id="add">＋ Save link</button><div class="navmenu" id="navMenu"><button class="btn navmenu-trigger" id="navMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="navMenuPanel"><span aria-hidden="true">☰</span> <span class="menu-trigger-label">Menu</span><span class="menu-chevron" aria-hidden="true">⌄</span></button><div class="navmenu-panel" id="navMenuPanel" role="menu" aria-label="Pocket actions" hidden><button class="navmenu-item navmenu-install" id="installPwa" type="button" role="menuitem">⬇ <span class="installlabel">Install app</span></button><span id="currentAccount" class="navmenu-accountname" hidden></span><span id="navMenuAccount" hidden aria-hidden="true"></span><div class="navmenu-divider"></div><div class="navmenu-section">ACCOUNT</div><button class="navmenu-item" id="switchAccount" type="button" role="menuitem" hidden><span class="navmenu-icon">⇄</span><span>Switch / log out</span></button><div class="navmenu-section">BACKUP &amp; EXPORT</div><button class="navmenu-item" id="exportAccounts" type="button" role="menuitem"><span class="navmenu-icon">↧</span><span>Export accounts</span></button><button class="navmenu-item" id="importAccounts" type="button" role="menuitem"><span class="navmenu-icon">↥</span><span>Import accounts</span></button><input id="accountsFile" type="file" accept=".json,application/json" hidden><button class="navmenu-item" id="exportCsv" type="button" role="menuitem" title="Export links as a spreadsheet-friendly CSV"><span class="navmenu-icon">▦</span><span>Export CSV</span><span class="navmenu-badge">CSV</span></button><button class="navmenu-item" id="export" type="button" role="menuitem"><span class="navmenu-icon">⇩</span><span>Export links</span><span class="navmenu-badge">JSON</span></button><div class="navmenu-section">PREFERENCES</div><button class="navmenu-item" id="theme" type="button" role="menuitem" aria-label="Toggle dark mode"><span class="navmenu-icon">☾</span><span id="themeMenuLabel">Dark mode</span><span class="navmenu-shortcut" id="themeMenuState">Off</span></button></div></div></div></header>
